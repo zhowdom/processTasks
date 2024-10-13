@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <span id="pause">暂停</span>
+  <span id="begin">开始</span>
+</body>
+</html>
+<script src="./processTasks.js"></script>
+<script>
+const tasks = []
+for (let i=0; i<5;i++) {
+  tasks.push(
+    () => 
+      new Promise(resolve => {
+        setTimeout(() => {
+          resolve(i)
+        },2000)
+      })
+  )
+}
+
+const processor = processTasks(...tasks);
+
+const begin = document.getElementById('begin')
+const pause = document.getElementById('pause')
+
+begin.onclick = async () => {
+  console.log('点击开始')
+  const results = await processor.start()
+  console.log('任务执行完成', results)
+}
+
+pause.onclick = async () => {
+  console.log('点击暂停')
+  processor.pause()
+}
+
+</script>
