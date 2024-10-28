@@ -20,19 +20,21 @@
           return
         }
         isRunning = true
+        console.log('isRunning的状态1', isRunning)
         while (i < tasks.length) {
           console.log(`执行第${i+1}个任务`)
           const r = await tasks[i]()
           result.push(r)
           console.log(`第${i+1}个任务执行完毕`)
           i++;
+          console.log('isRunning的状态2', isRunning)
           if (!isRunning) {
             return
           }
-          resolve(result)
         }
         // 所有任务执行完后，状态更新为‘不是运行中状态’
         isRunning = false
+        resolve(result)
       })
       
     },
